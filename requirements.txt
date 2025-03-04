@@ -1,0 +1,6 @@
+aiohttp
+aiogram
+passlib
+authx
+fastapi
+uvicorn

@@ -1,8 +1,9 @@
-from fastapi import FastAPI, Depends, HTTPException
-from authx import AuthX,RequestToken
-from loader import  config
+from fastapi import FastAPI, HTTPException
+from authx import AuthX
+from bot_IMEI.loader import config
 from passlib.context import CryptContext
 from pydantic import BaseModel
+import uvicorn
 app = FastAPI()
 
 
@@ -15,7 +16,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 auth.handle_errors(app)
 
 @app.post("/register")
-def register(user: UserCreate):
+async def register(user: UserCreate):
      if user.username in user.password:
           raise HTTPException(status_code=400, detail="Username already registered")
      hashed_password = pwd_context.hash(user.password)
@@ -23,6 +24,8 @@ def register(user: UserCreate):
      return {"ok": True}
 
 @app.post("/login")
-def login(username: str, password: str):
+async def login(username: str, password: str):
      ...
 
+if __name__ =="__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000)

@@ -6,6 +6,6 @@ TOKEN = env("Token")
 
 config = AuthXConfig(
      JWT_ALGORITHM = "HS256",
-     JWT_SECRET_KEY = f"{env("SECRET_KEY")}",
+     JWT_SECRET_KEY = f"{env('SECRET_KEY')}",
      JWT_TOKEN_LOCATION = ["headers"],
 )

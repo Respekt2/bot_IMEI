@@ -1,10 +1,10 @@
 from aiogram import F, Router
 from aiogram.types import Message
 from aiogram.filters import Command
-
 from aiogram.fsm.state import State,StatesGroup
 from aiogram.fsm.context import FSMContext
 
+from auth import register
 
 class User_Registor(StatesGroup):
     name = State()
@@ -35,4 +35,8 @@ async def password(mes: Message, state: FSMContext):
         await mes.answer("Пароль больше 10 символов")
     else:
         await state.update_data(password=mes.text)
-        user_data = await state.get_data()
+        data = await register(await state.get_data())
+        if data:
+            await mes.answer("Регистрация прошла успешно!")
+        else:
+            await mes.answer("Ошибка при регистрации.")
